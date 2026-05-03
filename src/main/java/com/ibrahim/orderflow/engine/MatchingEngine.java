@@ -14,7 +14,7 @@ import java.util.Map;
 public class MatchingEngine {
 
     // Store one order book per trading symbol.
-    private final Map<String, OrderBook> orderBooksBySymbol;
+    private final Map<String, OrderBookService> orderBooksBySymbol;
 
     // CREATE AN EMPTY MATCHING ENGINE
     public MatchingEngine() {
@@ -30,7 +30,7 @@ public class MatchingEngine {
         String symbol = incomingOrder.getSymbol().toUpperCase();
 
         // Create the symbol's order book if this is the first order for that symbol.
-        OrderBook orderBook = orderBooksBySymbol.computeIfAbsent(symbol, ignored -> new OrderBook());
+        OrderBookService orderBook = orderBooksBySymbol.computeIfAbsent(symbol, ignored -> new OrderBookService());
 
         // Store trades created during this submission.
         List<Trade> trades = new ArrayList<>();
@@ -55,7 +55,7 @@ public class MatchingEngine {
     }
 
     // MATCH AN INCOMING BUY ORDER AGAINST RESTING SELL ORDERS
-    private void matchBuyOrder(Order buyOrder, OrderBook orderBook, List<Trade> trades) {
+    private void matchBuyOrder(Order buyOrder, OrderBookService orderBook, List<Trade> trades) {
 
         // Keep matching while the buy order still has quantity.
         while (buyOrder.isActive()) {
@@ -87,7 +87,7 @@ public class MatchingEngine {
     }
 
     // MATCH AN INCOMING SELL ORDER AGAINST RESTING BUY ORDERS
-    private void matchSellOrder(Order sellOrder, OrderBook orderBook, List<Trade> trades) {
+    private void matchSellOrder(Order sellOrder, OrderBookService orderBook, List<Trade> trades) {
 
         // Keep matching while the sell order still has quantity.
         while (sellOrder.isActive()) {
@@ -156,9 +156,9 @@ public class MatchingEngine {
     }
 
     // GET AN ORDER BOOK FOR A SYMBOL
-    public OrderBook getOrderBook(String symbol) {
+    public OrderBookService getOrderBook(String symbol) {
 
         // Return the existing book, or a new empty book if the symbol has no orders yet.
-        return orderBooksBySymbol.computeIfAbsent(symbol.toUpperCase(), ignored -> new OrderBook());
+        return orderBooksBySymbol.computeIfAbsent(symbol.toUpperCase(), ignored -> new OrderBookService());
     }
 }

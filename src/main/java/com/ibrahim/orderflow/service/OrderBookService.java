@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 // STORES BUY AND SELL ORDERS FOR ONE SYMBOL
-public class OrderBook {
+public class OrderBookService {
 
     // BUY ORDERS: HIGHEST PRICE FIRST, THEN EARLIEST CREATED TIME
     private final PriorityQueue<Order> buyOrders;
@@ -18,7 +18,7 @@ public class OrderBook {
     private final PriorityQueue<Order> sellOrders;
 
     // CREATE AN EMPTY ORDER BOOK
-    public OrderBook() {
+    public OrderBookService() {
 
         // Buy orders should prioritize the highest price first.
         this.buyOrders = new PriorityQueue<>(
