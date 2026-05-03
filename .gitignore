@@ -1,0 +1,29 @@
+# MAVEN BUILD OUTPUT
+target/
+
+# JAVA COMPILED FILES
+*.class
+
+# ENVIRONMENT VARIABLES
+.env
+
+# LOG FILES
+*.log
+
+# VS CODE LOCAL SETTINGS
+.vscode/
+
+# INTELLIJ IDEA FILES
+.idea/
+*.iml
+
+# OPERATING SYSTEM FILES
+.DS_Store
+Thumbs.db
+
+# DOCKER OVERRIDES
+docker-compose.override.yml
+
+# TEMPORARY FILES
+*.tmp
+*.swp

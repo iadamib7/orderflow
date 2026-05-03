@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- DEFINE THIS AS A SPRING BOOT MAVEN PROJECT -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <!-- USE MAVEN'S STANDARD PROJECT MODEL -->
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- INHERIT SPRING BOOT'S DEFAULT DEPENDENCY AND PLUGIN VERSIONS -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.3.5</version>
+        <relativePath/>
+    </parent>
+
+    <!-- IDENTIFY THIS PROJECT -->
+    <groupId>com.ibrahim</groupId>
+    <artifactId>orderflow</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>orderflow</name>
+    <description>Event-driven trading engine built with Java, Spring Boot, PostgreSQL, Redis, Kafka, and Docker.</description>
+
+    <!-- CONFIGURE JAVA VERSION -->
+    <properties>
+        <java.version>21</java.version>
+    </properties>
+
+    <!-- PROJECT DEPENDENCIES -->
+    <dependencies>
+
+        <!-- SPRING WEB: BUILDS REST API ENDPOINTS -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- SPRING DATA JPA: CONNECTS JAVA MODELS TO POSTGRESQL TABLES -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <!-- VALIDATION: ALLOWS REQUEST BODY VALIDATION LIKE @NotNull AND @Positive -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <!-- POSTGRESQL DRIVER: LETS SPRING BOOT TALK TO POSTGRESQL -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- LOMBOK: REDUCES BOILERPLATE FOR GETTERS, SETTERS, AND CONSTRUCTORS -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- SPRING BOOT TEST: PROVIDES JUNIT, MOCKITO, AND SPRING TEST UTILITIES -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <!-- BUILD CONFIGURATION -->
+    <build>
+        <plugins>
+
+            <!-- SPRING BOOT MAVEN PLUGIN: BUILDS AND RUNS THE APPLICATION -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+
+                <!-- EXCLUDE LOMBOK FROM THE FINAL PACKAGED APPLICATION -->
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
+</project> 
