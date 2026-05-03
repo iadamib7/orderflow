@@ -1,6 +1,8 @@
 # OrderFlow
 
-OrderFlow is an event-driven trading engine built with Java and Spring Boot. It supports limit order submission, price-time-priority matching, trade execution, PostgreSQL persistence, and a REST API for interacting with orders, trades, and order book state.
+OrderFlow is a Java/Spring Boot trading engine that supports limit order submission, price-time-priority matching, trade execution, PostgreSQL persistence, and REST APIs for orders, trades, and order book snapshots.
+
+The project is designed to model the backend of an exchange-style order matching system.
 
 ## Tech Stack
 
@@ -9,24 +11,25 @@ OrderFlow is an event-driven trading engine built with Java and Spring Boot. It 
 - Spring Web
 - Spring Data JPA
 - PostgreSQL
-- Docker
+- Docker Compose
 - JUnit
+- GitHub Actions
 
 Planned additions:
 
-- Redis for live order book snapshots
+- Redis for cached order book snapshots
 - Kafka for trade event streaming
-- GitHub Actions for continuous integration
 - Benchmark scripts for local throughput testing
 
-## Core Features
+## Features
 
 - Submit buy and sell limit orders
 - Match orders using price-time priority
-- Support full and partial fills
-- Track open, partially filled, filled, and cancelled orders
-- Persist orders and trades
-- Expose REST APIs for orders, trades, and order book snapshots
+- Support full fills and partial fills
+- Track order states: `OPEN`, `PARTIALLY_FILLED`, `FILLED`, and `CANCELLED`
+- Persist orders and trades with PostgreSQL
+- Expose REST APIs for orders, trades, and order book state
+- Run unit tests automatically with GitHub Actions
 
 ## Matching Engine Design
 
@@ -42,32 +45,15 @@ Sell orders are prioritized by:
 1. Lowest price first
 2. Earliest creation time first
 
-When a new buy order arrives, it matches against the lowest-priced sell orders where the sell price is less than or equal to the buy price.
+A buy order matches when its price is greater than or equal to the best sell price.
 
-When a new sell order arrives, it matches against the highest-priced buy orders where the buy price is greater than or equal to the sell price.
+A sell order matches when its price is less than or equal to the best buy price.
 
-## Project Status
+The execution price is taken from the resting order already in the book.
 
-This project is currently in active development.
+## API Endpoints
 
-Current milestone:
+### Create an order
 
-- [x] Initialize project structure
-- [x] Configure Maven project
-- [ ] Implement domain models
-- [ ] Implement matching engine
-- [ ] Add unit tests
-- [ ] Add REST APIs
-- [ ] Add PostgreSQL persistence
-- [ ] Add Docker Compose
-- [ ] Add Redis caching
-- [ ] Add Kafka trade events
-
-## Running Locally
-
-This section will be updated once the first working Spring Boot application is implemented.
-
-Planned command:
-
-```bash
-./mvnw spring-boot:run
+```http
+POST /api/orders
