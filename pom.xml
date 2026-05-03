@@ -81,8 +81,11 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
 
-                <!-- EXCLUDE LOMBOK FROM THE FINAL PACKAGED APPLICATION -->
+                <!-- TELL SPRING BOOT WHICH CLASS STARTS THE APPLICATION -->
                 <configuration>
+                    <mainClass>com.ibrahim.orderflow.OrderFlowApplication</mainClass>
+
+                    <!-- EXCLUDE LOMBOK FROM THE FINAL PACKAGED APPLICATION -->
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
@@ -95,4 +98,4 @@
         </plugins>
     </build>
 
-</project> 
+</project>
