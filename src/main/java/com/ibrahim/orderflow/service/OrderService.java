@@ -1,5 +1,6 @@
 package com.ibrahim.orderflow.service;
 
+
 import com.ibrahim.orderflow.dto.CreateOrderRequest;
 import com.ibrahim.orderflow.engine.MatchResult;
 import com.ibrahim.orderflow.engine.MatchingEngine;
@@ -10,6 +11,8 @@ import com.ibrahim.orderflow.repository.OrderRepository;
 import com.ibrahim.orderflow.repository.TradeRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.ibrahim.orderflow.exception.InvalidOrderException;
+import com.ibrahim.orderflow.exception.OrderNotFoundException;
 
 import java.util.List;
 
@@ -64,13 +67,14 @@ public class OrderService {
         return result;
     }
 
-    // GET ONE ORDER BY ID
+       // GET ONE ORDER BY ID
     public Order getOrderById(Long id) {
 
-        // Return the order or throw a simple error for now.
+        // Return the order or throw a clean not-found error.
         return orderRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Order not found with id: " + id));
+                .orElseThrow(() -> new OrderNotFoundException("Order not found with id: " + id));
     }
+    
 
     // GET ORDERS FOR A SYMBOL
     public List<Order> getOrdersBySymbol(String symbol) {
@@ -88,7 +92,7 @@ public class OrderService {
 
         // Do not cancel orders that are already filled.
         if (order.getStatus() == OrderStatus.FILLED) {
-            throw new IllegalArgumentException("Cannot cancel a filled order.");
+           throw new InvalidOrderException("Cannot cancel a filled order.");
         }
 
         // Mark the order as cancelled.
